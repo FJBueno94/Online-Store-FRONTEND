@@ -12,7 +12,7 @@ export default class Home extends Component {
           <img
             src="https://svgsilh.com/svg/294547.svg"
             alt="carrindo-compras"
-            className="arrinho-img"
+            className="carrinho-img"
           />
         </Link>
         <p data-testid="home-initial-message" className="input-search-msg">
