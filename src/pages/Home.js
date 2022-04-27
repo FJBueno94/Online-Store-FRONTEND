@@ -22,6 +22,16 @@ handleInput = ({ target }) => {
   this.setState({ query: target.value });
 }
 
+handleCategoryInput = ({ target }) => {
+  this.setState({ showCard: true });
+
+  this.setState({ loading: true }, async () => {
+    const apiResponse = await api.getProductsFromCategoryAndQuery(target.id, '');
+    this.setState({ results: apiResponse.results });
+    this.setState({ loading: false });
+  });
+}
+
 handleButtonCard = () => {
   const { query, results } = this.state;
 
@@ -76,7 +86,7 @@ render() {
       >
         Digite algum termo de pesquisa ou escolha uma categoria.
       </p>
-      <Aside />
+      <Aside handleCategoryInput={ this.handleCategoryInput } />
     </div>
   );
 }
