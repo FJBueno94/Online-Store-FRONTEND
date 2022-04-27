@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as api from '../services/api';
 
 export default class Aside extends Component {
@@ -18,6 +19,7 @@ export default class Aside extends Component {
 
   render() {
     const { categoriesArray } = this.state;
+    const { handleCategoryInput } = this.props;
     return (
       <aside>
         {categoriesArray.map((category) => (
@@ -31,6 +33,7 @@ export default class Aside extends Component {
               type="radio"
               name="radioInput"
               id={ category.id }
+              onClick={ handleCategoryInput }
             />
           </label>
 
@@ -39,3 +42,7 @@ export default class Aside extends Component {
     );
   }
 }
+
+Aside.propTypes = {
+  handleCategoryInput: PropTypes.func,
+}.isRequired;
