@@ -11,10 +11,11 @@ export default class Home extends Component {
 
     this.state = {
       query: '',
+      clicked: '',
       showCard: false,
       loading: false,
-      results: [],
       message: false,
+      results: [],
     };
   }
 
@@ -28,6 +29,7 @@ handleCategoryInput = ({ target }) => {
   this.setState({ loading: true }, async () => {
     const apiResponse = await api.getProductsFromCategoryAndQuery(target.id, '');
     this.setState({ results: apiResponse.results });
+    this.setState({ clicked: target.id });
     this.setState({ loading: false });
   });
 }
@@ -39,6 +41,7 @@ handleButtonCard = () => {
   this.setState({ loading: true }, async () => {
     const apiResponse = await api.getProductsFromCategoryAndQuery('none', query);
     this.setState({ results: apiResponse.results });
+    this.setState({ clicked: query });
     this.setState({ loading: false });
 
     if (results.length === 0) {
@@ -50,7 +53,7 @@ handleButtonCard = () => {
 }
 
 render() {
-  const { message, query, showCard, loading, results } = this.state;
+  const { message, query, showCard, loading, results, clicked } = this.state;
   return (
     <div>
       <Link to="/shopcart" Component={ Shopcart } data-testid="shopping-cart-button">
@@ -79,6 +82,7 @@ render() {
          message={ message }
          loading={ loading }
          query={ results }
+         clicked={ clicked }
        />}
       <p
         data-testid="home-initial-message"
