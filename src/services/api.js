@@ -16,3 +16,14 @@ export async function getProductsFromCategoryAndQuery(categoryId, query) {
 
   return response;
 }
+
+export async function getProductInfo(productId) {
+  const url = `https://api.mercadolibre.com/items/${productId}`;
+  if (productId !== undefined) {
+    const data = await fetch(url);
+    const response = await data.json();
+
+    return response;
+  }
+  throw new Error('You must provide an url.');
+}
