@@ -29,30 +29,30 @@ export default class CardEspecifics extends Component {
     }
   }
 
-    reviewEvent = () => {
-      const {
-        email,
-        review,
-        comment,
-        result,
-      } = this.state;
+  reviewEvent = () => {
+    const {
+      email,
+      review,
+      comment,
+      result,
+    } = this.state;
 
-      const newReview = {
-        email,
-        review,
-        comment,
-      };
+    const newReview = {
+      email,
+      review,
+      comment,
+    };
 
-      this.setState((prevState) => ({
-        savedReviews: [...prevState.savedReviews, newReview],
-        email: '',
-        review: '',
-        comment: '',
-      }), () => {
-        const { savedReviews } = this.state;
-        localStorage.setItem(result.id, JSON.stringify(savedReviews));
-      });
-    }
+    this.setState((prevState) => ({
+      savedReviews: [...prevState.savedReviews, newReview],
+      email: '',
+      review: '',
+      comment: '',
+    }), () => {
+      const { savedReviews } = this.state;
+      localStorage.setItem(result.id, JSON.stringify(savedReviews));
+    });
+  }
 
   handleChange = ({ target }) => {
     const { name } = target;
@@ -117,7 +117,6 @@ export default class CardEspecifics extends Component {
   }
 
   render() {
-    const { result, loading } = this.state;
     const { superProps: { match: { params: { query, id } } } } = this.props;
     const {
       result,
@@ -129,21 +128,39 @@ export default class CardEspecifics extends Component {
     } = this.state;
     const grade = ['1', '2', '3', '4', '5'];
     return (
-      <>
-        <div>
-          {loading
-            ? <p>loading...</p>
-            : (
-              <div>
-                <p data-testid="product-detail-name">{result.title}</p>
-                <p>{result.price}</p>
-                <img
-                  src={ result.thumbnail }
-                  alt={ result.title }
-                />
-              </div>
-            )}
-        </div>
+      <div>
+        {loading
+          ? <p>loading...</p>
+          : (
+            <div>
+              <p data-testid="product-detail-name">{result.title}</p>
+              <p>{result.price}</p>
+              <img
+                src={ result.thumbnail }
+                alt={ result.title }
+              />
+              <input
+                data-testid="product-detail-add-to-cart"
+                type="button"
+                value="Adiconar ao Carrinho"
+                onClick={ this.addToCart }
+              />
+            </div>
+          )}
+        <Link
+          to={ `/cardespecics/${query}/${id}` }
+          data-testid="shopping-cart-button"
+        />
+        <Link
+          to="/shopcart"
+        >
+          <img
+            src="https://svgsilh.com/svg/294547.svg"
+            alt="carrindo-compras"
+            className="carrinho-img"
+          />
+        </Link>
+        <GetId itemsInCart={ result } />
         <div>
           <form>
             <h2>Avaliações</h2>
@@ -184,29 +201,6 @@ export default class CardEspecifics extends Component {
                 placeholder="Adicione um comentário"
                 onChange={ this.handleChange }
               />
-              <input
-                data-testid="product-detail-add-to-cart"
-                type="button"
-                value="Adiconar ao Carrinho"
-                onClick={ this.addToCart }
-              />
-            </div>
-          )}
-        <Link
-          to={ `/cardespecics/${query}/${id}` }
-          data-testid="shopping-cart-button"
-        />
-        <Link
-          to="/shopcart"
-        >
-          <img
-            src="https://svgsilh.com/svg/294547.svg"
-            alt="carrindo-compras"
-            className="carrinho-img"
-          />
-        </Link>
-        <GetId itemsInCart={ result } />
-      </div>
             </label>
             <br />
             <button
@@ -243,7 +237,7 @@ export default class CardEspecifics extends Component {
             </div>
           ))
         }
-      </>
+      </div>
     );
   }
 }
