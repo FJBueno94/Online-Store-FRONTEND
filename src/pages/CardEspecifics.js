@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Shopcart from './Shopcart';
+import GetId from '../components/GetId';
 import * as api from '../services/api';
 
 export default class CardEspecifics extends Component {
@@ -74,6 +74,7 @@ export default class CardEspecifics extends Component {
 
   render() {
     const { result, loading } = this.state;
+    const { superProps: { match: { params: { query, id } } } } = this.props;
     return (
       <div>
         {loading
@@ -94,13 +95,20 @@ export default class CardEspecifics extends Component {
               />
             </div>
           )}
-        <Link to="/shopcart" Component={ Shopcart } data-testid="shopping-cart-button">
+        <Link
+          to={ `/cardespecics/${query}/${id}` }
+          data-testid="shopping-cart-button"
+        />
+        <Link
+          to="/shopcart"
+        >
           <img
             src="https://svgsilh.com/svg/294547.svg"
             alt="carrindo-compras"
             className="carrinho-img"
           />
         </Link>
+        <GetId itemsInCart={ result } />
       </div>
     );
   }
