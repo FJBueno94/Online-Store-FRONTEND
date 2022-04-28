@@ -16,10 +16,11 @@ export default class CardEspecifics extends Component {
     };
   }
 
-  componentDidMount() {
-    this.handleGetApiResult();
-    const local = JSON.parse(localStorage.getItem('Reviews'));
-    if (local.length > 0) {
+  async componentDidMount() {
+    await this.handleGetApiResult();
+    const { result } = this.state;
+    const local = JSON.parse(localStorage.getItem(result.id));
+    if (local) {
       this.setState({
         savedReviews: local,
       });
@@ -31,7 +32,7 @@ export default class CardEspecifics extends Component {
         email,
         review,
         comment,
-        savedReviews,
+        result,
       } = this.state;
 
       const newReview = {
@@ -46,7 +47,8 @@ export default class CardEspecifics extends Component {
         review: '',
         comment: '',
       }), () => {
-        localStorage.setItem('Reviews', JSON.stringify(savedReviews));
+        const { savedReviews } = this.state;
+        localStorage.setItem(result.id, JSON.stringify(savedReviews));
       });
     }
 
@@ -88,6 +90,7 @@ export default class CardEspecifics extends Component {
       savedReviews,
     } = this.state;
     const grade = ['1', '2', '3', '4', '5'];
+
     return (
       <>
         <div>
