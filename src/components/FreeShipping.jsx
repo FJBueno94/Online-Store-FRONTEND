@@ -7,7 +7,7 @@ class FreeShipping extends Component {
     return (
       <p>
         {headline.shipping?.free_shipping && (
-          <p data-testid="free-shipping"> frete grátis </p>
+          <p data-testid="free-shipping"> Frete Grátis! </p>
         )}
       </p>
     );
@@ -21,5 +21,5 @@ FreeShipping.propTypes = {
 export default FreeShipping;
 
 //* Consultei o site: https://stackoverflow.com/questions/70611388/render-a-nested-object-from-api-type-error-cannot-read-properties-of-undefine
-// Para entender como resolver um erro na demora da api com o uso de encadeamento opicional
+// Para entender como resolver um erro na demora da api com o uso de encadeamento opcional
 //*
