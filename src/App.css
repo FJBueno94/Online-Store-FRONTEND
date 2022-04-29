@@ -3,7 +3,6 @@
 }
 
 .carrinho-img {
-  float: right;
   margin-right: 30px;
   width: 40px;
 }
@@ -23,4 +22,9 @@
 
 .doNotShow {
   display: none;
+}
+
+.shop_cart_icon {
+  border: 1px solid red;
+  display: flex;
 }

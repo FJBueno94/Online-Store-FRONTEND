@@ -1,5 +1,4 @@
 export default async function addToCart(result) {
-//   const result = await api.getProductInfo(id);
   let alreadyInCart = JSON.parse(localStorage.getItem('cart'));
   if (alreadyInCart == null) {
     alreadyInCart = [];
