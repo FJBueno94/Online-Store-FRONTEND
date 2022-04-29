@@ -110,7 +110,7 @@ export default class CardEspecifics extends Component {
                 src={ result.thumbnail }
                 alt={ result.title }
               />
-              <FreeShipping headline={ result } />
+              <FreeShipping itemData={ result } />
               <input
                 data-testid="product-detail-add-to-cart"
                 type="button"

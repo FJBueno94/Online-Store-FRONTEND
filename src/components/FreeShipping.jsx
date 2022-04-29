@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 class FreeShipping extends Component {
   render() {
-    const { headline } = this.props;
+    const { itemData } = this.props;
     return (
       <p>
-        {headline.shipping?.free_shipping && (
+        {itemData.shipping?.free_shipping && (
           <p data-testid="free-shipping"> Frete Grátis! </p>
         )}
       </p>
@@ -15,7 +15,7 @@ class FreeShipping extends Component {
 }
 
 FreeShipping.propTypes = {
-  headline: PropTypes.objectOf(PropTypes.any).isRequired,
+  itemData: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default FreeShipping;

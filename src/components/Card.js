@@ -39,7 +39,7 @@ export default class Card extends Component {
                     <p>{product.price}</p>
                   </div>
                 </Link>
-                <FreeShipping headline={ product } />
+                <FreeShipping itemData={ product } />
                 <button
                   type="button"
                   data-testid="product-add-to-cart"
