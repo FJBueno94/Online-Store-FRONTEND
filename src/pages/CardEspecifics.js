@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import * as api from '../services/api';
 import addToCart from '../services/addToCart';
 import CartIcon from '../components/CartIcon';
+import FreeShipping from '../components/FreeShipping';
+// import FreeShipping from '../components/FreeShipping';
 
 export default class CardEspecifics extends Component {
   constructor(props) {
@@ -109,6 +111,7 @@ export default class CardEspecifics extends Component {
                 src={ result.thumbnail }
                 alt={ result.title }
               />
+              <FreeShipping headline={ result } />
               <input
                 data-testid="product-detail-add-to-cart"
                 type="button"

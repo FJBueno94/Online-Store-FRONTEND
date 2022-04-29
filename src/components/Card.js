@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as api from '../services/api';
 import addToCart from '../services/addToCart';
+import FreeShipping from './FreeShipping';
 
 export default class Card extends Component {
   constructor(props) {
@@ -38,6 +39,7 @@ export default class Card extends Component {
                     <p>{product.price}</p>
                   </div>
                 </Link>
+                <FreeShipping headline={ product } />
                 <button
                   type="button"
                   data-testid="product-add-to-cart"
