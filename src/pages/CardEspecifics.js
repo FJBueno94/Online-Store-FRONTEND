@@ -102,7 +102,7 @@ export default class CardEspecifics extends Component {
         {loading
           ? <p>loading...</p>
           : (
-            <div>
+            <div id={ result.productId }>
               <p data-testid="product-detail-name">{result.title}</p>
               <p>{result.price}</p>
               <img

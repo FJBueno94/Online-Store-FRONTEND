@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import * as api from '../services/api';
+import Buttons from '../components/Buttons';
 
 export default class extends Component {
   constructor(props) {
@@ -7,7 +7,7 @@ export default class extends Component {
 
     this.state = {
       itemsInCart: [],
-      // itemsInfos: [],
+      finalPrice: 0,
     };
   }
 
@@ -18,8 +18,17 @@ export default class extends Component {
     } else this.setState({ itemsInCart });
   }
 
+  handleFinalPrice = () => {
+    const LocalStorageCartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    const finalPrice = LocalStorageCartItems.map(
+      (item) => item.productPrice * item.quantity,
+    ).reduce((a, b) => a + b, 0);
+
+    this.setState({ finalPrice });
+  }
+
   render() {
-    const { itemsInCart } = this.state;
+    const { itemsInCart, finalPrice } = this.state;
 
     const emptyMessage = (
       <p
@@ -31,23 +40,25 @@ export default class extends Component {
       </p>);
 
     const cart = itemsInCart.map((item) => (
-      <div key={ item.productName }>
+      <div key={ item.productName } id={ item.productId }>
         <p data-testid="shopping-cart-product-name">{item.productName}</p>
-        <p>{item.productPrice}</p>
         <img
           src={ item.productPhoto }
           alt={ item.productName }
         />
-        <p data-testid="shopping-cart-product-quantity">
-          Quantidade
-          {item.quantity}
-        </p>
+        <Buttons
+          arr={ itemsInCart }
+          quantity={ item.quantity }
+          price={ item.productPrice }
+          handleFinalPrice={ this.handleFinalPrice }
+        />
       </div>
     ));
 
     return (
       <div>
         {itemsInCart.length === 0 ? emptyMessage : cart}
+        {finalPrice.toFixed(2)}
       </div>
     );
   }
