@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import GetId from '../components/GetId';
 import * as api from '../services/api';
 import addToCart from '../services/addToCart';
 import CartIcon from '../components/CartIcon';
@@ -85,12 +83,11 @@ export default class CardEspecifics extends Component {
   }
 
   addToCart = async () => {
-    const { superProps: { match: { params: { id } } } } = this.props;
-    addToCart(id);
+    const { result } = this.state;
+    addToCart(result);
   }
 
   render() {
-    const { superProps: { match: { params: { query, id } } } } = this.props;
     const {
       result,
       loading,
@@ -120,12 +117,7 @@ export default class CardEspecifics extends Component {
               />
             </div>
           )}
-        <Link
-          to={ `/cardespecics/${query}/${id}` }
-          data-testid="shopping-cart-button"
-        />
         <CartIcon />
-        <GetId itemsInCart={ result } />
         <div>
           <form>
             <h2>Avaliações</h2>

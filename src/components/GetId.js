@@ -5,7 +5,7 @@ export default class GetId extends Component {
   render() {
     const { itemsInCart } = this.props;
     return (
-      <div className="doNotShow">
+      <div>
         {itemsInCart
         && (
           <div key={ itemsInCart.title }>

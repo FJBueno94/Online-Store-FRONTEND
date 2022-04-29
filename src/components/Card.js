@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as api from '../services/api';
+import addToCart from '../services/addToCart';
 
 export default class Card extends Component {
   constructor(props) {
@@ -40,7 +41,7 @@ export default class Card extends Component {
                 <button
                   type="button"
                   data-testid="product-add-to-cart"
-                  onClick={ this.handleClick }
+                  onClick={ () => addToCart(product) }
                   value={ product.id }
                 >
                   Adicionar ao Carrinho
