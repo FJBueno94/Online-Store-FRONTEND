@@ -15,6 +15,7 @@ export default class CardEspecifics extends Component {
       review: '',
       comment: '',
       savedReviews: [],
+      quantityOfItemsInCart: 0,
     };
   }
 
@@ -27,6 +28,7 @@ export default class CardEspecifics extends Component {
         savedReviews: local,
       });
     }
+    this.newfunc();
   }
 
   reviewEvent = () => {
@@ -85,6 +87,21 @@ export default class CardEspecifics extends Component {
   addToCart = async () => {
     const { result } = this.state;
     addToCart(result);
+    this.newfunc();
+  }
+
+  newfunc = () => {
+    const itemsInCart = JSON.parse(localStorage.getItem('cart'));
+    let total = 0;
+    if (itemsInCart != null) {
+      console.log(itemsInCart);
+      itemsInCart.forEach((item) => {
+        total += item.quantity;
+      });
+    }
+    console.log(total);
+    this.setState({ quantityOfItemsInCart: total });
+    console.log('chamou');
   }
 
   render() {
@@ -95,6 +112,7 @@ export default class CardEspecifics extends Component {
       review,
       comment,
       savedReviews,
+      quantityOfItemsInCart,
     } = this.state;
     const grade = ['1', '2', '3', '4', '5'];
     return (
@@ -117,7 +135,7 @@ export default class CardEspecifics extends Component {
               />
             </div>
           )}
-        <CartIcon />
+        <CartIcon quantity={ quantityOfItemsInCart } />
         <div>
           <form>
             <h2>Avaliações</h2>
