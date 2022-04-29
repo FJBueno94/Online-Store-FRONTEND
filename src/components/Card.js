@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import * as api from '../services/api';
 import addToCart from '../services/addToCart';
 
 export default class Card extends Component {
@@ -12,9 +11,10 @@ export default class Card extends Component {
     };
   }
 
-  handleClick = async ({ target }) => {
-    const result = await api.getProductInfo(target.value);
-    console.log(result);
+  handleClick = (product) => {
+    const { increaseCartNumber } = this.props;
+    addToCart(product);
+    increaseCartNumber();
   }
 
   render() {
@@ -41,7 +41,7 @@ export default class Card extends Component {
                 <button
                   type="button"
                   data-testid="product-add-to-cart"
-                  onClick={ () => addToCart(product) }
+                  onClick={ () => this.handleClick(product) }
                   value={ product.id }
                 >
                   Adicionar ao Carrinho
@@ -61,4 +61,5 @@ Card.propTypes = {
   loading: PropTypes.bool,
   message: PropTypes.bool,
   clicked: PropTypes.string,
+  increaseCartNumber: PropTypes.func,
 }.isRequired;
