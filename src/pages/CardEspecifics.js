@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as api from '../services/api';
 import addToCart from '../services/addToCart';
+import cartItemsCount from '../services/manageCartCount';
 import CartIcon from '../components/CartIcon';
 
 export default class CardEspecifics extends Component {
@@ -20,6 +21,9 @@ export default class CardEspecifics extends Component {
   }
 
   async componentDidMount() {
+    const total = cartItemsCount();
+    this.setState({ quantityOfItemsInCart: total });
+    // this.newfunc();
     await this.handleGetApiResult();
     const { result } = this.state;
     const local = JSON.parse(localStorage.getItem(result.id));
@@ -28,7 +32,6 @@ export default class CardEspecifics extends Component {
         savedReviews: local,
       });
     }
-    this.newfunc();
   }
 
   reviewEvent = () => {
@@ -86,22 +89,10 @@ export default class CardEspecifics extends Component {
 
   addToCart = async () => {
     const { result } = this.state;
-    addToCart(result);
-    this.newfunc();
-  }
-
-  newfunc = () => {
-    const itemsInCart = JSON.parse(localStorage.getItem('cart'));
-    let total = 0;
-    if (itemsInCart != null) {
-      console.log(itemsInCart);
-      itemsInCart.forEach((item) => {
-        total += item.quantity;
-      });
-    }
-    console.log(total);
+    await addToCart(result);
+    const total = cartItemsCount();
     this.setState({ quantityOfItemsInCart: total });
-    console.log('chamou');
+    // this.newfunc();
   }
 
   render() {

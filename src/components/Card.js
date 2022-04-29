@@ -12,8 +12,9 @@ export default class Card extends Component {
   }
 
   handleClick = (product) => {
+    const { increaseCartNumber } = this.props;
     addToCart(product);
-    console.log('chamou handle');
+    increaseCartNumber();
   }
 
   render() {
@@ -60,4 +61,5 @@ Card.propTypes = {
   loading: PropTypes.bool,
   message: PropTypes.bool,
   clicked: PropTypes.string,
+  increaseCartNumber: PropTypes.func,
 }.isRequired;

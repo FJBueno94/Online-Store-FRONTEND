@@ -1,29 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Shopcart from '../pages/Shopcart';
 
 export default class CartIcon extends React.Component {
-  constructor() {
-    super();
-
-    this.state = { quantityOfItemsInCart: 0 };
-  }
-
-  componentDidMount() {
-    const itemsInCart = JSON.parse(localStorage.getItem('cart'));
-    if (itemsInCart != null) {
-      let total = 0;
-      console.log(itemsInCart);
-      itemsInCart.forEach((item) => {
-        total += item.quantity;
-      });
-      console.log(total);
-      this.setState({ quantityOfItemsInCart: total });
-    }
-  }
-
   render() {
-    const { quantityOfItemsInCart } = this.state;
+    const { quantity } = this.props;
     return (
       <Link to="/shopcart" Component={ Shopcart } data-testid="shopping-cart-button">
         <div className="shop_cart_icon">
@@ -32,9 +14,13 @@ export default class CartIcon extends React.Component {
             alt="carrindo-compras"
             className="carrinho-img"
           />
-          <span data-testid="shopping-cart-size">{quantityOfItemsInCart}</span>
+          <span data-testid="shopping-cart-size">{quantity}</span>
         </div>
       </Link>
     );
   }
 }
+
+CartIcon.propTypes = {
+  quantity: PropTypes.number,
+}.isRequired;

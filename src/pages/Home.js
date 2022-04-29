@@ -4,6 +4,7 @@ import Aside from '../components/Aside';
 // import Shopcart from './Shopcart';
 import Card from '../components/Card';
 import * as api from '../services/api';
+import cartItemsCount from '../services/manageCartCount';
 import CartIcon from '../components/CartIcon';
 
 export default class Home extends Component {
@@ -17,7 +18,14 @@ export default class Home extends Component {
       loading: false,
       message: false,
       results: [],
+      quantityOfItemsInCart: 0,
     };
+  }
+
+  componentDidMount() {
+    const total = cartItemsCount();
+    this.setState({ quantityOfItemsInCart: total });
+    // this.newfunc();
   }
 
 handleInput = ({ target }) => {
@@ -53,11 +61,17 @@ handleButtonCard = () => {
   });
 }
 
+handleCartCount = () => {
+  const total = cartItemsCount();
+  this.setState({ quantityOfItemsInCart: total });
+}
+
 render() {
-  const { message, query, showCard, loading, results, clicked } = this.state;
+  const { message, query, showCard,
+    loading, results, clicked, quantityOfItemsInCart } = this.state;
   return (
     <div>
-      <CartIcon />
+      <CartIcon quantity={ quantityOfItemsInCart } />
 
       <input
         id="search-input"
@@ -78,6 +92,7 @@ render() {
          loading={ loading }
          query={ results }
          clicked={ clicked }
+         increaseCartNumber={ this.handleCartCount }
        />}
       <p
         data-testid="home-initial-message"
