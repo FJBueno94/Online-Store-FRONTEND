@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import GetId from '../components/GetId';
 import * as api from '../services/api';
+import addToCart from '../services/addToCart';
+import CartIcon from '../components/CartIcon';
 
 export default class CardEspecifics extends Component {
   constructor(props) {
@@ -83,41 +83,11 @@ export default class CardEspecifics extends Component {
   }
 
   addToCart = async () => {
-    const { superProps: { match: { params: { id } } } } = this.props;
-    const result = await api.getProductInfo(id);
-    let alreadyInCart = JSON.parse(localStorage.getItem('cart'));
-    if (alreadyInCart == null) {
-      alreadyInCart = [];
-    }
-    let quantity = 1;
-    if (alreadyInCart.some((itemInCart) => itemInCart.productName === result.title)) {
-      const itemInCart = alreadyInCart.find((obj) => obj.productName === result.title);
-      quantity = itemInCart.quantity + 1;
-      const item = {
-        productId: result.id,
-        productName: result.title,
-        productPrice: result.price,
-        productPhoto: result.thumbnail,
-        quantity,
-      };
-      const newCart = alreadyInCart.filter((obj) => obj.productId !== result.id);
-      newCart.push(item);
-      localStorage.setItem('cart', JSON.stringify(newCart));
-    } else {
-      const item = {
-        productId: result.id,
-        productName: result.title,
-        productPrice: result.price,
-        productPhoto: result.thumbnail,
-        quantity,
-      };
-      const newCart = [...alreadyInCart, item];
-      localStorage.setItem('cart', JSON.stringify(newCart));
-    }
+    const { result } = this.state;
+    addToCart(result);
   }
 
   render() {
-    const { superProps: { match: { params: { query, id } } } } = this.props;
     const {
       result,
       loading,
@@ -147,20 +117,7 @@ export default class CardEspecifics extends Component {
               />
             </div>
           )}
-        <Link
-          to={ `/cardespecics/${query}/${id}` }
-          data-testid="shopping-cart-button"
-        />
-        <Link
-          to="/shopcart"
-        >
-          <img
-            src="https://svgsilh.com/svg/294547.svg"
-            alt="carrindo-compras"
-            className="carrinho-img"
-          />
-        </Link>
-        <GetId itemsInCart={ result } />
+        <CartIcon />
         <div>
           <form>
             <h2>Avaliações</h2>
