@@ -3,6 +3,7 @@ import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import Home from './pages/Home';
 import Shopcart from './pages/Shopcart';
 import CardEspecifics from './pages/CardEspecifics';
+import Checkout from './pages/Checkout';
 import './App.css';
 
 class App extends Component {
@@ -27,6 +28,7 @@ class App extends Component {
                 />
               ) }
             />
+            <Route exact path="/checkout" component={ Checkout } />
           </Switch>
         </Router>
       </div>

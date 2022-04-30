@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Buttons from '../components/Buttons';
 
 export default class extends Component {
@@ -16,6 +17,7 @@ export default class extends Component {
     if (itemsInCart == null) {
       console.log('itemsInCart é null');
     } else this.setState({ itemsInCart });
+    this.handleFinalPrice();
   }
 
   handleFinalPrice = () => {
@@ -55,10 +57,21 @@ export default class extends Component {
       </div>
     ));
 
+    localStorage.setItem('finalPrice', JSON.stringify(finalPrice));
+
     return (
       <div>
         {itemsInCart.length === 0 ? emptyMessage : cart}
         {finalPrice.toFixed(2)}
+        <br />
+        <Link to="/checkout">
+          <button
+            type="button"
+            data-testid="checkout-products"
+          >
+            Finalizar compra
+          </button>
+        </Link>
       </div>
     );
   }
