@@ -7,6 +7,7 @@ export default class Buttons extends Component {
     this.state = {
       quantityState: props.quantity,
       total: props.price * props.quantity,
+      disabled: false,
     };
   }
 
@@ -19,12 +20,17 @@ export default class Buttons extends Component {
       const { id } = target.parentElement.parentElement;
       const itemFromCart = arr.find((item) => item.productId === id);
 
+      if (itemFromCart.ProductAvailability - 1 === quantityState) {
+        this.setState({ disabled: true });
+      } else {
+        this.setState({ disabled: false });
+      }
+
       itemFromCart.quantity = quantityState + 1;
       if (itemFromCart.quantity === 0) {
         itemFromCart.quantity = 1;
       }
       localStorage.setItem('cart', JSON.stringify(arr));
-
       handleFinalPrice();
     }
 
@@ -38,6 +44,12 @@ export default class Buttons extends Component {
 
       const { id } = target.parentElement.parentElement;
       const itemFromCart = arr.find((item) => item.productId === id);
+
+      if (itemFromCart.ProductAvailability - 1 === quantityState) {
+        this.setState({ disabled: true });
+      } else {
+        this.setState({ disabled: false });
+      }
 
       itemFromCart.quantity = quantityState - 1;
       if (itemFromCart.quantity === 0) {
@@ -62,7 +74,7 @@ export default class Buttons extends Component {
     }
 
     render() {
-      const { quantityState, total } = this.state;
+      const { quantityState, total, disabled } = this.state;
       return (
         <div>
           <button
@@ -81,6 +93,7 @@ export default class Buttons extends Component {
             type="button"
             onClick={ this.handleAddition }
             data-testid="product-increase-quantity"
+            disabled={ disabled }
           >
             +
           </button>
