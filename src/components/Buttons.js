@@ -49,6 +49,7 @@ export default class Buttons extends Component {
     }
 
     handleDelete = ({ target }) => {
+      const { handleFinalPrice } = this.props;
       const LocalStorageCartItem = JSON.parse(localStorage.getItem('cart')) || [];
       const { id } = target.parentElement.parentElement;
       const newLocalStorageCartItem = LocalStorageCartItem.filter(
@@ -56,6 +57,8 @@ export default class Buttons extends Component {
       );
       localStorage.setItem('cart', JSON.stringify(newLocalStorageCartItem));
       target.parentElement.parentElement.remove();
+
+      handleFinalPrice();
     }
 
     render() {
